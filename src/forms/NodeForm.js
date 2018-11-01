@@ -1,9 +1,9 @@
-import React, { cloneElement, Children, Component } from 'react';
+import React, {cloneElement, Children, Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import compose from 'recompose/compose';
-import { withStyles } from '@material-ui/core/styles';
-import { reduxForm } from 'redux-form';
+import {withStyles} from '@material-ui/core/styles';
+import {reduxForm} from 'redux-form';
 import {
     crudUpdate as crudUpdateAction,
     startUndoable as startUndoableAction,
@@ -71,6 +71,7 @@ const sanitizeRestProps = ({
                                validate,
                                ...props
                            }) => props;
+
 class NodeForm extends Component {
     static propTypes = {
         actions: PropTypes.node,
@@ -91,7 +92,7 @@ class NodeForm extends Component {
     };
 
     static defaultProps = {
-        actions: <NodeFormActions />,
+        actions: <NodeFormActions/>,
     };
 
     handleClick = event => {
@@ -104,19 +105,12 @@ class NodeForm extends Component {
         }
     };
 
-    handleDrop = event => {
-        event.persist();
-        if (this.props.cancelDropOnChildren) {
-            event.preventDefault();
-        }
-    };
-
     handleSubmit = () => {
         const {
             basePath,
             dispatchCrudUpdate,
             handleSubmit,
-            node: { record },
+            node: {record},
             resource,
             startUndoable,
             undoable = true,
@@ -129,7 +123,7 @@ class NodeForm extends Component {
                     crudUpdateAction(
                         resource,
                         record.id,
-                        { ...record, ...values },
+                        {...record, ...values},
                         record,
                         basePath,
                         false
@@ -138,7 +132,7 @@ class NodeForm extends Component {
                     : dispatchCrudUpdate(
                     resource,
                     record.id,
-                    { ...record, ...values },
+                    {...record, ...values},
                     record,
                     basePath,
                     false
@@ -174,7 +168,6 @@ class NodeForm extends Component {
                         field
                             ? cloneElement(field, {
                                 basePath: field.props.basePath || basePath,
-                                onDrop: this.handleDrop,
                                 record: node.record,
                                 resource,
                             })
@@ -197,11 +190,17 @@ class NodeForm extends Component {
     }
 }
 
-const mapStateToProps = (state, { node }) => ({
-    form: `tree-node-form-${node.id}`,
-    initialValues: node.record,
-    record: node.record,
-});
+const mapStateToProps = (state, {record}) => {
+
+
+    console.log(record)
+    return {
+        node: {record: record},
+        form: `list-node-form-${record.id}`,
+        initialValues: record,
+        record: record,
+    }
+};
 
 export default compose(
     connect(
@@ -214,6 +213,7 @@ export default compose(
     reduxForm({
         enableReinitialize: true,
         keepDirtyOnReinitialize: true,
+        destroyOnUnmount: false
     }),
     withStyles(styles)
 )(NodeForm);

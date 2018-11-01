@@ -27,8 +27,9 @@ const PostQuickEditView = ({classes, ...props}) => {
         <EditController {...props} match={{}} location={{}} >
             {({resource, record, save, basePath, version}) => (
 
-                <SimpleForm resource={resource} record={record} save={save} basePath={basePath} version={version}
+                <SimpleForm resource={resource} record={record} save={save} basePath={basePath} version={version} form={'list-inline-form' + record.id}
                             redirect={false}>
+                    <TextField source="id"/>
                     <TextInput source="title" validate={required()} resettable/>
                     <TextInput source="rank" validate={required()} resettable/>
                 </SimpleForm>)}
@@ -71,18 +72,20 @@ class PostQuickEditButton extends React.Component {
                 <Button onClick={this.handleClick} label="Quick Edit">
                     <IconImageEye/>
                 </Button>
-                <Drawer
+
+                {showPanel? <Drawer
                     anchor="right"
-                    open={showPanel}
+                    open={true}
                     onClose={this.handleCloseClick}
-                >
+                    >
                     <div>
-                        <Button label="Close" onClick={this.handleCloseClick}>
-                            <IconKeyboardArrowRight/>
-                        </Button>
+                    <Button label="Close" onClick={this.handleCloseClick}>
+                    <IconKeyboardArrowRight/>
+                    </Button>
                     </div>
                     <PostQuickEdit id={record.id.toString() } basePath="/posts" resource="posts"/>
-                </Drawer>
+                    </Drawer>: null}
+
             </Fragment>
         );
     }
