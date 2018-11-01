@@ -2,27 +2,24 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import { Admin, Resource } from 'react-admin';
+import fakeDataProvider from 'ra-data-fakerest';
+
+import posts from './posts';
+
+const dataProvider = fakeDataProvider({
+    posts: [
+        { id: 0, title: 'Hello, world!', rank: 1 },
+        { id: 1, title: 'FooBar', rank: 2},
+    ],
+
+})
+
+const App = () => (
+    <Admin dataProvider={dataProvider}>
+      <Resource name="posts" {...posts} />
+    </Admin>
+);
+
 
 export default App;
