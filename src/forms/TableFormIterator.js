@@ -1,9 +1,7 @@
 import React, {Children, cloneElement, Component} from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import get from 'lodash/get';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {withStyles} from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/RemoveCircleOutline';
@@ -57,7 +55,7 @@ const styles = theme => ({
     leftIcon: {
         marginRight: theme.spacing.unit,
     },
-    inlineBlockInput: {display: 'inline-flex', marginRight: '10rem'},
+    inlineBlockInput: {display: 'inline-flex'},
 });
 
 export class SimpleFormIterator extends Component {
@@ -111,13 +109,9 @@ export class SimpleFormIterator extends Component {
                 {submitFailed && error && <span>{error}</span>}
 
                 <table>
-
                     <tbody>
-
                     {fields.map((member, index) => (
                         <tr>
-
-
                             {Children.map(children, (input, index2) => (
                                 <td>
                                     <FormInput
@@ -167,12 +161,8 @@ export class SimpleFormIterator extends Component {
                                     </span>
                                 )}
                             </td>
-
-
                         </tr>
-
                     ))}
-
 
                     </tbody>
                 </table>
