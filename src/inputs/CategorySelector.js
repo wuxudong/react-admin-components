@@ -6,10 +6,11 @@ import {formValues} from 'redux-form'
 
 class CategorySelector extends Component {
     render() {
-        const {l1, l2, categoryId, categories} = this.props
+        const {l1, l2, categories} = this.props
 
-        let l1Options, l2Options, l3Options = []
-        l1Options = categories
+        let l1Options = categories
+        let l2Options = []
+        let l3Options = []
 
         const l1Value = l1Options.find(c => `${c.name}` == l1)
 
