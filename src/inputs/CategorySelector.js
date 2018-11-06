@@ -1,74 +1,59 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 
-import {Field} from 'redux-form'
+
+import {SelectInput} from 'react-admin'
+import {formValues} from 'redux-form'
 
 class CategorySelector extends Component {
-    state = {
-        l1Options: [],
-        l2Options: [],
-        l3Options: [],
-
-        l1Value: null,
-        l2Value: null,
-        categoryId: null,
-    }
-
-    componentDidMount() {
-        const {categories} = this.props
-
-        this.setState({l1Options: categories, l2Options:[], l3Options:[]})
-
-    }
-
-    handleL1Change(event, newValue) {
-        const result = this.state.l1Options.find(c => `${c.name}` == newValue);
-        this.setState({...this.state, l2Options: result ? result.sub : [], l3Options: [], });
-    }
-
-    handleL2Change(event, newValue) {
-        const result = this.state.l2Options.find(c => `${c.name}` == newValue);
-        this.setState({...this.state, l3Options: result ? result.sub : [], });
-    }
-
     render() {
-        const {l1Options, l2Options, l3Options} = this.state;
-        return (<div>
-            <Field
-                name="l1"
+        const {l1, l2, categoryId, categories} = this.props
+
+        let l1Options, l2Options, l3Options = []
+        l1Options = categories
+
+        const l1Value = l1Options.find(c => `${c.name}` == l1)
+
+        if (l1Value) {
+            l2Options = l1Value.sub
+        }
+
+        const l2Value = l2Options.find(c => `${c.name}` == l2)
+
+        if (l2Value) {
+            l3Options = l2Value.sub
+        }
+
+        return (<Fragment>
+            <SelectInput
+                source="l1"
                 label={'1级分类'}
-                placeholder="选择1级分类"
-                component="select"
-                onChange={this.handleL1Change.bind(this)}
-            >
-                <option value={null}></option>
-                {l1Options.map(o => (<option value={o.name}>{o.name}</option>))}
+                allowEmpty={true}
+                choices={l1Options}
+                optionText="name"
+                optionValue="name"
+            />
 
-            </Field>
-
-            <Field
-                name="l2"
+            <SelectInput
+                source="l2"
                 label={'2级分类'}
-                placeholder="选择2级分类"
-                component="select"
-                onChange={this.handleL2Change.bind(this)}
-            >
-                <option value={null}></option>
-                {l2Options.map(o => (<option value={o.name}>{o.name}</option>))}
-            </Field>
+                allowEmpty={true}
+                choices={l2Options}
+                optionText="name"
+                optionValue="name"
+            />
 
-            <Field
-                name="l3"
+            <SelectInput
+                source="categoryId"
                 label={'3级分类'}
-                placeholder="选择3级分类"
-                component="select"
-            >
-                <option value={null}></option>
-                {l3Options.map(o => (<option value={o.id}>{o.name}</option>))}
-            </Field>
-        </div>);
+                allowEmpty={true}
+                choices={l3Options}
+                optionText="name"
+                optionValue="id"
+            />
+        </Fragment>);
     }
 
 
 }
 
-export default CategorySelector;
+export default formValues({l1: 'l1', l2: 'l2', categoryId: 'categoryId'})(CategorySelector);
