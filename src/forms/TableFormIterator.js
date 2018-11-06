@@ -12,50 +12,58 @@ import classNames from 'classnames';
 import {FormInput} from 'react-admin';
 
 const styles = theme => ({
-    root: {
-        padding: 0,
-        marginBottom: 0,
-        '& > li:last-child': {
-            borderBottom: 'none',
-        },
+    // root: {
+    //     padding: 0,
+    //     marginBottom: 0,
+    //     '& > li:last-child': {
+    //         borderBottom: 'none',
+    //     },
+    // },
+    // line: {
+    //     display: 'flex',
+    //     listStyleType: 'none',
+    //     borderBottom: `solid 1px ${theme.palette.divider}`,
+    //     [theme.breakpoints.down('xs')]: {display: 'block'},
+    //     '&.fade-enter': {
+    //         opacity: 0.01,
+    //         transform: 'translateX(100vw)',
+    //     },
+    //     '&.fade-enter-active': {
+    //         opacity: 1,
+    //         transform: 'translateX(0)',
+    //         transition: 'all 500ms ease-in',
+    //     },
+    //     '&.fade-exit': {
+    //         opacity: 1,
+    //         transform: 'translateX(0)',
+    //     },
+    //     '&.fade-exit-active': {
+    //         opacity: 0.01,
+    //         transform: 'translateX(100vw)',
+    //         transition: 'all 500ms ease-in',
+    //     },
+    // },
+    table: {
+        // border: "1px solid",
+        borderSpacing : "0px",
+        borderCollapse: "collapse"
     },
-    line: {
-        display: 'flex',
-        listStyleType: 'none',
-        borderBottom: `solid 1px ${theme.palette.divider}`,
-        [theme.breakpoints.down('xs')]: {display: 'block'},
-        '&.fade-enter': {
-            opacity: 0.01,
-            transform: 'translateX(100vw)',
-        },
-        '&.fade-enter-active': {
-            opacity: 1,
-            transform: 'translateX(0)',
-            transition: 'all 500ms ease-in',
-        },
-        '&.fade-exit': {
-            opacity: 1,
-            transform: 'translateX(0)',
-        },
-        '&.fade-exit-active': {
-            opacity: 0.01,
-            transform: 'translateX(100vw)',
-            transition: 'all 500ms ease-in',
-        },
+    cell: {
+        border: "1px solid",
     },
-    index: {
-        width: '3em',
-        paddingTop: '1em',
-        [theme.breakpoints.down('sm')]: {display: 'none'},
-    },
-    form: {flex: 2},
-    action: {
-        paddingTop: '0.5em',
-    },
-    leftIcon: {
-        marginRight: theme.spacing.unit,
-    },
-    inlineBlockInput: {display: 'inline-flex'},
+    // index: {
+    //     width: '3em',
+    //     paddingTop: '1em',
+    //     [theme.breakpoints.down('sm')]: {display: 'none'},
+    // },
+    // form: {flex: 2},
+    // action: {
+    //     paddingTop: '0.5em',
+    // },
+    // leftIcon: {
+    //     marginRight: theme.spacing.unit,
+    // },
+    // inlineBlockInput: {display: 'inline-flex'},
 });
 
 export class SimpleFormIterator extends Component {
@@ -95,6 +103,7 @@ export class SimpleFormIterator extends Component {
             classes = {},
             children,
             fields,
+            className,
             meta: {error, submitFailed},
             record,
             resource,
@@ -108,12 +117,12 @@ export class SimpleFormIterator extends Component {
             <ul className={classes.root}>
                 {submitFailed && error && <span>{error}</span>}
 
-                <table>
+                <table className={classes.table}>
                     <tbody>
                     {fields.map((member, index) => (
                         <tr>
                             {Children.map(children, (input, index2) => (
-                                <td>
+                                <td className={classes.cell}>
                                     <FormInput
                                         basePath={
                                             input.props.basePath || basePath
@@ -142,7 +151,7 @@ export class SimpleFormIterator extends Component {
                                 </td>
                             ))}
 
-                            <td>
+                            <td className={classes.cell}>
                                 {!disableRemove && (
                                     <span className={classes.action}>
                                         <Button

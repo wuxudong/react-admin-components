@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "ra-data-fakerest": "^2.4.0",
+    "ra-language-chinese": "^2.0.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.1.0"

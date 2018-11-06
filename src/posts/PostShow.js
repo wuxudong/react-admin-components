@@ -6,6 +6,8 @@ import {
 } from 'react-admin'; // eslint-disable-line import/no-unresolved
 
 
+
+
 const PostShow = props => (
     <Show {...props}>
         <SimpleShowLayout>

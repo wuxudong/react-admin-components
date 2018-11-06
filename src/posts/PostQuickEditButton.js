@@ -69,7 +69,7 @@ class PostQuickEditButton extends React.Component {
         const {record} = this.props;
         return (
             <Fragment>
-                <Button onClick={this.handleClick} label="Quick Edit">
+                <Button onClick={this.handleClick} label="快速编辑">
                     <IconImageEye/>
                 </Button>
 
@@ -79,7 +79,7 @@ class PostQuickEditButton extends React.Component {
                     onClose={this.handleCloseClick}
                     >
                     <div>
-                    <Button label="Close" onClick={this.handleCloseClick}>
+                    <Button label="关闭" onClick={this.handleCloseClick}>
                     <IconKeyboardArrowRight/>
                     </Button>
                     </div>
