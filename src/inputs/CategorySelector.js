@@ -1,14 +1,33 @@
 import React, {Component, Fragment} from 'react';
 
 
-import {SelectInput} from 'react-admin'
+import {SelectInput, GET_LIST} from 'react-admin'
 import {formValues} from 'redux-form'
 
-class CategorySelector extends Component {
-    render() {
-        const {l1, l2, categories} = this.props
+import dataProvider from '../dataProvider'
 
-        let l1Options = categories
+class CategorySelector extends Component {
+    state = {
+        categories: []
+    }
+
+    componentDidMount() {
+        dataProvider(GET_LIST, 'categories', {
+            pagination: {page: 1, perPage: 1024},
+            sort: {field: "id", order: "ASC"}
+        }).then(json => {
+            let array = json.data
+            this.setState({
+                categories: array
+            })
+        })
+    }
+
+
+    render() {
+        const {l1, l2, source} = this.props
+
+        let l1Options = this.state.categories
         let l2Options = []
         let l3Options = []
 
@@ -26,7 +45,7 @@ class CategorySelector extends Component {
 
         return (<Fragment>
             <SelectInput
-                source="l1"
+                source={`${source}.l1`}
                 label={'1级分类'}
                 allowEmpty={true}
                 choices={l1Options}
@@ -35,7 +54,7 @@ class CategorySelector extends Component {
             />
 
             <SelectInput
-                source="l2"
+                source={`${source}.l2`}
                 label={'2级分类'}
                 allowEmpty={true}
                 choices={l2Options}
@@ -44,7 +63,7 @@ class CategorySelector extends Component {
             />
 
             <SelectInput
-                source="categoryId"
+                source={`${source}.id`}
                 label={'3级分类'}
                 allowEmpty={true}
                 choices={l3Options}
@@ -57,4 +76,5 @@ class CategorySelector extends Component {
 
 }
 
-export default formValues({l1: 'l1', l2: 'l2', categoryId: 'categoryId'})(CategorySelector);
+
+export default formValues(props => ({l1: `${props.source}.l1`, l2: `${props.source}.l2`}))(CategorySelector);

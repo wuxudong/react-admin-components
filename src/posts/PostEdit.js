@@ -15,6 +15,8 @@ import {
 import {withStyles} from '@material-ui/core/styles';
 import TableFormIterator from '../forms/TableFormIterator'
 
+import CategorySelector from '../inputs/CategorySelector'
+
 const styles = {
     inlineInputContainer: {display: 'inline-flex', marginRight: '1rem', width: "10rem"},
 };
@@ -39,6 +41,7 @@ const PostEdit = ({classes, ...props}) => {
             <TextInput source="rank" validate={required()} resettable label="优先级"
                        formClassName={classes.inlineInputContainer}/>
 
+            <CategorySelector source="category" label="分类" alwaysOn/>
 
 
             <ImageInput source="image" label="图片" placeholder="选择图片"  accept="image/*" multiple={false} formClassName={classes.inlineInputContainer}>

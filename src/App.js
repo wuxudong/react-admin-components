@@ -3,10 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 
 import {Admin, Resource} from 'react-admin';
-import fakeDataProvider from 'ra-data-fakerest';
+
 import chineseMessages from 'ra-language-chinese';
 
 import {createMuiTheme} from '@material-ui/core/styles';
+
+import dataProvider from './dataProvider'
 
 
 import posts from './posts';
@@ -18,32 +20,6 @@ const messages = {
 const i18nProvider = locale => messages[locale];
 
 
-const dataProvider = fakeDataProvider({
-    posts: [
-        {
-            id: 0,
-            title: 'Hello, world!',
-            rank: 1,
-            comments: [{id: 0, content: "comment 0 of 0", rank: 1}, {id: 1, content: "comment 1 of 0", rank: 3}, {
-                id: 4,
-                content: "comment 3 of 0",
-                rank: 5
-            }]
-        },
-        {
-            id: 1,
-            title: 'FooBar',
-            rank: 2,
-            comments: [{id: 2, content: "comment 0 of 1", rank: 2}, {id: 3, content: "comment 1 of 1", rank: 4}]
-        },
-        {
-            id: 2,
-            title: 'Woo',
-            rank: 3,
-            comments: [{id: 7, content: "comment 0 of 12", rank: 2}, {id: 8, content: "comment 1 of 2", rank: 4}]
-        }
-    ],
-})
 
 
 const myTheme = createMuiTheme({
