@@ -9,13 +9,20 @@ import {
     TextField,
     DisabledInput,
     ImageInput,
+    BooleanInput,
     ImageField,
+    Toolbar,
+    SaveButton,
+    FormDataConsumer
 } from 'react-admin'; // eslint-disable-line import/no-unresolved
 
 import {withStyles} from '@material-ui/core/styles';
 import TableFormIterator from '../forms/TableFormIterator'
 
 import CategorySelector from '../inputs/CategorySelector'
+import { connect } from 'react-redux'
+
+import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form'
 
 const styles = {
     inlineInputContainer: {display: 'inline-flex', marginRight: '1rem', width: "10rem"},
@@ -23,36 +30,54 @@ const styles = {
 
 const ShortTextInput = (props) => <TextInput {...props} style={styles.cellInput}/>
 
+
+class PostCreateToolbar extends React.Component {
+
+    mySubmit(param) {
+
+    }
+
+    render() {
+        return <Toolbar {...this.props} >
+            <SaveButton
+                label="post.action.save_and_show"
+                redirect="show"
+                submitOnEnter={true}
+
+            />
+
+        </Toolbar>
+    }
+}
+
+const selector = formValueSelector('record-form')
+let MyComputedValue = ({content, rank}) => (
+    <span>{content} {rank}</span>
+)
+
+MyComputedValue =  connect(
+    (state, props) => ({
+        content: selector(state, `${props.member}.content`),
+        rank: selector(state, `${props.member}.rank`),
+    })
+)(MyComputedValue)
+
 const PostEdit = ({classes, ...props}) => {
     return (<Edit {...props}>
         <SimpleForm>
 
             <TextInput source="title" validate={required()} resettable label="标题"
                        formClassName={classes.inlineInputContainer}/>
-            <TextInput source="rank" validate={required()} resettable label="优先级"
-                       formClassName={classes.inlineInputContainer}/>
-            <TextInput source="rank" validate={required()} resettable label="优先级"
-                       formClassName={classes.inlineInputContainer}/>
-            <TextInput source="rank" validate={required()} resettable label="优先级"
-                       formClassName={classes.inlineInputContainer}/>
-
-            <TextInput source="title" validate={required()} resettable label="标题"
-                       formClassName={classes.inlineInputContainer}/>
-            <TextInput source="rank" validate={required()} resettable label="优先级"
-                       formClassName={classes.inlineInputContainer}/>
 
             <CategorySelector source="category" label="分类" alwaysOn/>
 
+            <BooleanInput source="statusAsBoolean"/>
 
-            <ImageInput source="image" label="图片" placeholder="选择图片"  accept="image/*" multiple={false} formClassName={classes.inlineInputContainer}>
+
+            <ImageInput source="image" label="图片" placeholder="选择图片" accept="image/*" multiple={false}
+                        formClassName={classes.inlineInputContainer}>
                 <ImageField source="src"/>
             </ImageInput>
-
-            <TextField source="title" formClassName={classes.inlineInputContainer}/>
-            <TextField source="title" formClassName={classes.inlineInputContainer}/>
-
-            <TextField source="title" formClassName={classes.inlineInputContainer}/>
-            <TextField source="title" formClassName={classes.inlineInputContainer}/>
 
             <TextField source="title" formClassName={classes.inlineInputContainer}/>
             <TextField source="rank" formClassName={classes.inlineInputContainer}/>
@@ -62,19 +87,9 @@ const PostEdit = ({classes, ...props}) => {
                 <TableFormIterator disableAdd>
                     <TextInput source="content" label="内容"/>
                     <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
-                    <ShortTextInput source="rank" label="优先级"/>
+
+
+                    <MyComputedValue/>
                 </TableFormIterator>
             </ArrayInput>
 

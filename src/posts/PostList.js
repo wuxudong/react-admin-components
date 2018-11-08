@@ -15,6 +15,7 @@ import CategorySelector from '../inputs/CategorySelector'
 
 import compose from 'recompose/compose';
 import {withStyles} from '@material-ui/core/styles';
+import NodeForm from '../forms/NodeForm'
 
 
 const styles = {

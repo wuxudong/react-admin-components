@@ -48,6 +48,27 @@ const myTheme = createMuiTheme({
             }
         },
 
+        MuiFormControl: {
+            root: {
+                // flexDirection: "row",
+
+            }
+        },
+
+        MuiInputLabel: {
+            root: {
+                color: "#000f",
+                padding: "0px 0 0px"
+            }
+        },
+
+        Labeled: {
+            label: {
+                padding: "0px 0 0px"
+            }
+        },
+
+
         MuiCard: {
             root: {
                 overflow: "auto"

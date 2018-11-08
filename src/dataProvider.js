@@ -5,6 +5,7 @@ export default fakeDataProvider({
         {
             id: 0,
             title: 'Hello, world!',
+            status: "ONLINE",
             rank: 1,
             category: {
                 id: 1,
@@ -22,6 +23,7 @@ export default fakeDataProvider({
             id: 1,
             title: 'FooBar',
             rank: 2,
+            status: "ONLINE",
             category: {
                 id: 2,
                 l1: "水果生鲜",
@@ -34,6 +36,7 @@ export default fakeDataProvider({
             id: 2,
             title: 'Woo',
             rank: 3,
+            status: "OFFLINE",
             category: {
                 id: 3,
                 l1: "水果生鲜",

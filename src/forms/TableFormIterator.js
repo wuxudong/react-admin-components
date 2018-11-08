@@ -139,6 +139,8 @@ export class SimpleFormIterator extends Component {
                                             label:
                                             input.props.label ||
                                             input.props.source,
+
+                                            member:member
                                         })}
                                         record={
                                             (records && records[index]) ||
@@ -146,6 +148,8 @@ export class SimpleFormIterator extends Component {
                                         }
                                         resource={resource}
                                         formClassName={classes.inlineBlockInput}
+
+
                                     />
 
                                 </td>
