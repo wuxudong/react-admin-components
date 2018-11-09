@@ -20,11 +20,12 @@ import {withStyles} from '@material-ui/core/styles';
 import TableFormIterator from '../forms/TableFormIterator'
 
 import CategorySelector from '../inputs/CategorySelector'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form'
+import {Field, FieldArray, reduxForm, formValueSelector} from 'redux-form'
 import PlainTextInput from '../inputs/PlainTextInput'
 import PlainTextField from '../inputs/PlainTextField'
+import queryString from'query-string'
 
 const styles = {
     inlineInputContainer: {display: 'inline-flex', marginRight: '1rem', width: "10rem"},
@@ -54,10 +55,10 @@ class PostCreateToolbar extends React.Component {
 
 const selector = formValueSelector('record-form')
 let MyComputedValue = ({content, rank}) => (
-    <span>{content} {rank}</span>
+    <span>我是一个运营字段 {content} {rank}</span>
 )
 
-MyComputedValue =  connect(
+MyComputedValue = connect(
     (state, props) => ({
         content: selector(state, `${props.member}.content`),
         rank: selector(state, `${props.member}.rank`),
@@ -88,11 +89,12 @@ const PostEdit = ({classes, ...props}) => {
             <ArrayInput source="comments" label="评论">
                 <TableFormIterator disableAdd>
                     <PlainTextInput source="content" label="内容" style={{marginRight: "5px", marginLeft: "5px"}}/>
-                    <PlainTextInput source="rank" label="优先级" style={{marginRight: "5px", marginLeft: "5px", width:"3rem"}}/>
-                    <PlainTextField source="rank" label="优先级" notReplaceSource={true} style={{display:"inline-block" ,width:"9rem"}}/>
+                    <PlainTextInput source="rank" label="优先级"
+                                    style={{marginRight: "5px", marginLeft: "5px", width: "3rem"}}/>
+                    <PlainTextField source="rank" label="优先级" notReplaceSource={true}
+                                    style={{display: "inline-block", width: "9rem"}}/>
 
-
-                    <MyComputedValue label="复合字段"/>
+                    {props.forOperation && <MyComputedValue label="复合字段"/> }
                 </TableFormIterator>
             </ArrayInput>
 
@@ -101,4 +103,16 @@ const PostEdit = ({classes, ...props}) => {
 
 };
 
-export default withStyles(styles)(PostEdit);
+const mapStateToProps = (state, props) => {
+    const parsed = queryString.parse(props.location.search);
+
+    console.log(parsed )
+    return {
+        forOperation: parsed.forOperation == 'true',
+    };
+};
+
+
+export default withStyles(styles)(connect(
+    mapStateToProps
+)(PostEdit));

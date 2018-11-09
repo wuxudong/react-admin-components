@@ -123,13 +123,13 @@ export class SimpleFormIterator extends Component {
                         {React.Children.map(
                             children,
                             (field, index) =>
-                                <td className={classes.cell}>
+                                (field && <td className={classes.cell}>
 
                                     {field ? (
                                         <span>{field.props.label}</span>
                                     ) : null}
 
-                                </td>
+                                </td>)
                         )}
 
                         <td className={classes.cell}/>
@@ -140,6 +140,9 @@ export class SimpleFormIterator extends Component {
                     {fields.map((member, index) => (
                         <tr>
                             {Children.map(children, (input, index2) => {
+                                if (!input)
+                                    return
+
                                 let source = input.props.source
 
                                 let notReplaceSource = input.props.notReplaceSource
@@ -153,8 +156,6 @@ export class SimpleFormIterator extends Component {
                                             }`
                                         : member
                                 }
-
-
 
 
                                 return (<td className={classes.cell}>

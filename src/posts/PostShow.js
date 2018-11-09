@@ -1,11 +1,11 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import {
     Show,
     TextField,
-    SimpleShowLayout
+    SimpleShowLayout,
+    FunctionField
 } from 'react-admin'; // eslint-disable-line import/no-unresolved
-
-
 
 
 const PostShow = props => (
@@ -14,6 +14,9 @@ const PostShow = props => (
             <TextField source="id"/>
             <TextField source="title"/>
             <TextField source="rank"/>
+
+
+
         </SimpleShowLayout>
     </Show>
 );
