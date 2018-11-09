@@ -23,6 +23,8 @@ import CategorySelector from '../inputs/CategorySelector'
 import { connect } from 'react-redux'
 
 import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form'
+import PlainTextInput from '../inputs/PlainTextInput'
+import PlainTextField from '../inputs/PlainTextField'
 
 const styles = {
     inlineInputContainer: {display: 'inline-flex', marginRight: '1rem', width: "10rem"},
@@ -85,11 +87,12 @@ const PostEdit = ({classes, ...props}) => {
 
             <ArrayInput source="comments" label="评论">
                 <TableFormIterator disableAdd>
-                    <TextInput source="content" label="内容"/>
-                    <ShortTextInput source="rank" label="优先级"/>
+                    <PlainTextInput source="content" label="内容" style={{marginRight: "5px", marginLeft: "5px"}}/>
+                    <PlainTextInput source="rank" label="优先级" style={{marginRight: "5px", marginLeft: "5px", width:"3rem"}}/>
+                    <PlainTextField source="rank" label="优先级" notReplaceSource={true} style={{display:"inline-block" ,width:"9rem"}}/>
 
 
-                    <MyComputedValue/>
+                    <MyComputedValue label="复合字段"/>
                 </TableFormIterator>
             </ArrayInput>
 

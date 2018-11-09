@@ -45,7 +45,7 @@ const styles = theme => ({
     // },
     table: {
         // border: "1px solid",
-        borderSpacing : "0px",
+        borderSpacing: "0px",
         borderCollapse: "collapse"
     },
     cell: {
@@ -119,41 +119,73 @@ export class SimpleFormIterator extends Component {
 
                 <table className={classes.table}>
                     <tbody>
-                    {fields.map((member, index) => (
-                        <tr>
-                            {Children.map(children, (input, index2) => (
+                    <tr>
+                        {React.Children.map(
+                            children,
+                            (field, index) =>
                                 <td className={classes.cell}>
-                                    <FormInput
-                                        basePath={
-                                            input.props.basePath || basePath
-                                        }
-                                        input={cloneElement(input, {
-                                            source: input.props.source
-                                                ? `${member}.${
-                                                    input.props.source
-                                                    }`
-                                                : member,
-                                            index: input.props.source
-                                                ? undefined
-                                                : index2,
-                                            label:
-                                            input.props.label ||
-                                            input.props.source,
 
-                                            member:member
-                                        })}
-                                        record={
-                                            (records && records[index]) ||
-                                            {}
-                                        }
-                                        resource={resource}
-                                        formClassName={classes.inlineBlockInput}
-
-
-                                    />
+                                    {field ? (
+                                        <span>{field.props.label}</span>
+                                    ) : null}
 
                                 </td>
-                            ))}
+                        )}
+
+                        <td className={classes.cell}/>
+
+                    </tr>
+
+
+                    {fields.map((member, index) => (
+                        <tr>
+                            {Children.map(children, (input, index2) => {
+                                let source = input.props.source
+
+                                let notReplaceSource = input.props.notReplaceSource
+
+                                if (notReplaceSource) {
+
+                                } else {
+                                    source = input.props.source
+                                        ? `${member}.${
+                                            input.props.source
+                                            }`
+                                        : member
+                                }
+
+
+
+
+                                return (<td className={classes.cell}>
+                                        <FormInput
+                                            basePath={
+                                                input.props.basePath || basePath
+                                            }
+                                            input={cloneElement(input, {
+                                                source: source,
+                                                index: input.props.source
+                                                    ? undefined
+                                                    : index2,
+                                                label:
+                                                input.props.label ||
+                                                input.props.source,
+
+                                                member: member
+                                            })}
+                                            record={
+                                                (records && records[index]) ||
+                                                {}
+                                            }
+                                            resource={resource}
+                                            formClassName={classes.inlineBlockInput}
+
+
+                                        />
+
+                                    </td>
+                                )
+                            })}
 
                             <td className={classes.cell}>
                                 {!disableRemove && (
