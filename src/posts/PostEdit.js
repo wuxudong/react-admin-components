@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {
     Edit,
     SimpleForm,
@@ -13,7 +13,14 @@ import {
     ImageField,
     Toolbar,
     SaveButton,
-    FormDataConsumer
+    FunctionField,
+    SelectInput,
+    Datagrid,
+    FormDataConsumer,
+    ReferenceField,
+    FieldTitle,
+    ArrayField,
+    ResettableTextField,
 } from 'react-admin'; // eslint-disable-line import/no-unresolved
 
 import {withStyles} from '@material-ui/core/styles';
@@ -22,13 +29,17 @@ import TableFormIterator from '../forms/TableFormIterator'
 import CategorySelector from '../inputs/CategorySelector'
 import {connect} from 'react-redux'
 
+import MuiTextField from '@material-ui/core/TextField';
+
 import {Field, FieldArray, reduxForm, formValueSelector} from 'redux-form'
 import PlainTextInput from '../inputs/PlainTextInput'
 import PlainTextField from '../inputs/PlainTextField'
-import queryString from'query-string'
+import InputLikeTextField from '../inputs/InputLikeTextField'
+import queryString from 'query-string'
 
 const styles = {
     inlineInputContainer: {display: 'inline-flex', marginRight: '1rem', width: "10rem"},
+
 };
 
 const ShortTextInput = (props) => <TextInput {...props} style={styles.cellInput}/>
@@ -72,31 +83,79 @@ const PostEdit = ({classes, ...props}) => {
             <TextInput source="title" validate={required()} resettable label="标题"
                        formClassName={classes.inlineInputContainer}/>
 
-            <CategorySelector source="category" label="分类" alwaysOn/>
 
-            <BooleanInput source="statusAsBoolean"/>
-
-
-            <ImageInput source="image" label="图片" placeholder="选择图片" accept="image/*" multiple={false}
-                        formClassName={classes.inlineInputContainer}>
-                <ImageField source="src"/>
-            </ImageInput>
-
-            <TextField source="title" formClassName={classes.inlineInputContainer}/>
-            <TextField source="rank" formClassName={classes.inlineInputContainer}/>
+            <TextInput source="rank" validate={required()} resettable label="rank"
+                       formClassName={classes.inlineInputContainer}/>
 
 
-            <ArrayInput source="comments" label="评论">
-                <TableFormIterator disableAdd>
-                    <PlainTextInput source="content" label="内容" style={{marginRight: "5px", marginLeft: "5px"}}/>
-                    <PlainTextInput source="rank" label="优先级"
-                                    style={{marginRight: "5px", marginLeft: "5px", width: "3rem"}}/>
-                    <PlainTextField source="rank" label="优先级" notReplaceSource={true}
-                                    style={{display: "inline-block", width: "9rem"}}/>
+            {/*<InputLikeTextField source="rank" label="rank"
+                       formClassName={classes.inlineInputContainer}/>
+*/}
 
-                    {props.forOperation && <MyComputedValue label="复合字段"/> }
-                </TableFormIterator>
-            </ArrayInput>
+            {/*<ReferenceField label="anotherPostRank" source="id" reference="posts" addLabel={false}*/}
+            {/*record={{id: 2}} allowEmpty={true} linkType={false}*/}
+            {/*basePath="posts" formClassName={classes.inlineInputContainer}>*/}
+            {/*<InputLikeTextField source="rank" label="rank"/>*/}
+            {/*</ReferenceField >*/}
+
+
+            {/*<Fragment formClassName={classes.inlineInputContainer}>*/}
+                {/*<ReferenceField source="id" reference="posts" addLabel={true}*/}
+                                {/*record={{id: 0}} allowEmpty={true} linkType={false} //basePath="posts"*/}
+                                {/*formClassName={classes.inlineInputContainer}>*/}
+
+                    {/*<FunctionField render={record =>*/}
+                        {/*( <MuiTextField value={record.title} InputProps={{*/}
+                            {/*disableUnderline: true,*/}
+                            {/*readOnly: true*/}
+                        {/*}} label={*/}
+                            {/*<FieldTitle*/}
+                                {/*label="标题"*/}
+                            {/*/>*/}
+
+                        {/*}/>)}/>*/}
+
+                {/*</ReferenceField>*/}
+            {/*</Fragment>*/}
+
+
+            <SelectInput source="anotherPostId" choices={[
+            {id: '0', name: '0'},
+            {id: '1', name: '1'},
+            {id: '2', name: '2'},
+            ]}/>
+
+
+            <FormDataConsumer>
+            {({formData, ...rest}) => (
+            <ReferenceField source="id" reference="posts"
+            record={{id: formData.anotherPostId}} allowEmpty={true} linkType={false}
+            basePath="posts">
+            <TextField source="rank"/>
+            </ReferenceField>
+
+            )
+            }
+            </FormDataConsumer>
+
+
+            {/*<ArrayInput source="comments">*/}
+
+            {/*<TableFormIterator disableAdd disableRemove>*/}
+            {/*<TextInput source="content" style={{width: "10rem"}} label="content" addLabel={false}/>*/}
+            {/*<TextInput source="content" style={{width: "30rem"}} label="content" addLabel={false}/>*/}
+            {/*<TextInput source="content" style={{width: "30rem"}} label="content" addLabel={false}/>*/}
+            {/*<TextField source="content" style={{width: "10rem"}} label="content" addLabel={false}*/}
+            {/*notReplaceSource={true}/>*/}
+
+            {/*<PlainTextField source="content" style={{width: "30rem"}} label="content" addLabel={false}*/}
+            {/*notReplaceSource={true}/>*/}
+
+
+            {/*</TableFormIterator>*/}
+
+            {/*</ArrayInput>*/}
+
 
         </SimpleForm>
     </Edit>)
@@ -106,7 +165,6 @@ const PostEdit = ({classes, ...props}) => {
 const mapStateToProps = (state, props) => {
     const parsed = queryString.parse(props.location.search);
 
-    console.log(parsed )
     return {
         forOperation: parsed.forOperation == 'true',
     };

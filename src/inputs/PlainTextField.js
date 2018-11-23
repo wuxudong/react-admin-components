@@ -5,7 +5,7 @@ import {
 
 
 
-const TextFieldInTableForm = ({source, record, ...rest}) => (
-    <span {...rest}>{record[source]}</span>
+const TextFieldInTableForm = ({...rest}) => (
+    <TextField addLabel={false} {...rest} />
 );
 export default TextFieldInTableForm;

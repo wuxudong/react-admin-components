@@ -119,17 +119,37 @@ export class SimpleFormIterator extends Component {
 
                 <table className={classes.table}>
                     <tbody>
+                    {/*<tr>*/}
+                        {/*{React.Children.map(*/}
+                            {/*children,*/}
+                            {/*(field, index) =>*/}
+                                {/*(field && <td className={classes.cell}>*/}
+
+                                    {/*{field ? (*/}
+                                        {/*<span>{field.props.label}</span>*/}
+                                    {/*) : null}*/}
+
+                                {/*</td>)*/}
+                        {/*)}*/}
+
+                        {/*<td className={classes.cell}/>*/}
+
+                    {/*</tr>*/}
+
                     <tr>
                         {React.Children.map(
                             children,
-                            (field, index) =>
-                                (field && <td className={classes.cell}>
+                            (field, index) => {
+                                console.log(field.props)
+                                return (<th className={classes.cell} style={field.props.style}>
 
                                     {field ? (
-                                        <span>{field.props.label}</span>
+                                        `${field.props.label}`
                                     ) : null}
 
-                                </td>)
+                                </th>)
+
+                            }
                         )}
 
                         <td className={classes.cell}/>

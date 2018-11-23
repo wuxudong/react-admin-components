@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Route } from 'react-router';
 import logo from './logo.svg';
 import './App.css';
 
@@ -8,8 +9,15 @@ import chineseMessages from 'ra-language-chinese';
 
 import {createMuiTheme} from '@material-ui/core/styles';
 
+import CustomRouteNoLayout from './CustomRouteNoLayout'
+
 import dataProvider from './dataProvider'
 
+
+import NestedMenuItem from './menus/NestedMenuItem'
+import Menu from './menus/Menu'
+
+import RelenishmentCreate from './replenishments/ReplenishmentCreate'
 
 import posts from './posts';
 
@@ -78,8 +86,19 @@ const myTheme = createMuiTheme({
 });
 
 const App = () => (
-    <Admin dataProvider={dataProvider} locale="cn" i18nProvider={i18nProvider} theme={myTheme}>
+    <Admin dataProvider={dataProvider} locale="cn" i18nProvider={i18nProvider} theme={myTheme}  customRoutes={[
+        <Route
+            exact
+            path="/custom"
+            component={CustomRouteNoLayout}
+            noLayout
+        />
+
+    ]}>
         <Resource name="posts" {...posts} />
+        <Resource name="tags"  />
+        <Resource name="categories"  />
+        <Resource name="replenishments" create={RelenishmentCreate}  />
     </Admin>
 );
 

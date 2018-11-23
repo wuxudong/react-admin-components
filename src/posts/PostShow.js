@@ -4,7 +4,9 @@ import {
     Show,
     TextField,
     SimpleShowLayout,
-    FunctionField
+    FunctionField,
+    ArrayField,
+    Datagrid
 } from 'react-admin'; // eslint-disable-line import/no-unresolved
 
 

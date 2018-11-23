@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "deep-object-diff": "^1.1.0",
     "query-string": "^6.2.0",
-    "ra-data-fakerest": "^2.4.0",
+    "ra-data-json-server": "^2.4.0",
     "ra-language-chinese": "^2.0.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
